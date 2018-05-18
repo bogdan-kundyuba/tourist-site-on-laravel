@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Contact;
+use Session;
 use Illuminate\Http\Request;
 
 class ContactController extends Controller {
@@ -25,10 +26,13 @@ class ContactController extends Controller {
             'name' => 'required|max:10',
             'email' => 'required',
             'phone' => 'required',
-            'body' => 'required'
+            'body' => 'required|max:255'
         ]);
 
         Contact::create(request(['name', 'email', 'phone', 'body']));
+        
+        // Flass message goes here
+        session()->flash('flash_message', 'Спасибо. Ваше сообщение было отправлено');
 
         return redirect('/');
     }
